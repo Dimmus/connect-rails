@@ -1,8 +1,6 @@
 require "openstax/connect/engine"
 require "openstax/connect/version"
 
-require "omniauth/strategies/openstax"
-
 module OpenStax
   module Connect
 
@@ -32,10 +30,18 @@ module OpenStax
       class Configuration
         attr_accessor :openstax_application_id
         attr_accessor :openstax_application_secret
-        
+        attr_reader :openstax_services_url
+
+        def openstax_services_url=(url)
+          url.gsub!(/https|http/,'https') if !(url =~ /localhost/)
+          url = url + "/" if url[url.size-1] != '/'
+          @openstax_services_url = url
+        end
+
         def initialize      
           @openstax_application_id = 'SET ME!'
           @openstax_application_secret = 'SET ME!'
+          @openstax_services_url = 'https://services.openstax.org/'
           super
         end
       end

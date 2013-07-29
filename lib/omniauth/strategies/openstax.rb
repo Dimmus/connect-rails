@@ -7,7 +7,7 @@ module OmniAuth
       option :name, :openstax
 
       option :client_options, {
-        :site => "http://localhost:3000", # TODO make services.openstax.org in production at least
+        :site => OpenStax::Connect.configuration.openstax_services_url,
         :authorize_url => "/oauth/authorize"
       }
 

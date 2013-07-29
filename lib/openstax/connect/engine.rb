@@ -17,9 +17,14 @@ module OpenStax
       # https://gist.github.com/pablomarti/5243118
       middleware.use ::OmniAuth::Builder do
         provider :openstax, 
-           OpenStax::Connect.configuration.openstax_application_id,
-           OpenStax::Connect.configuration.openstax_application_secret
-        end
+                 OpenStax::Connect.configuration.openstax_application_id,
+                 OpenStax::Connect.configuration.openstax_application_secret
+      end
+
+      config.after_initialize do
+        # The omniauth strategy requires values given during application init
+        require "omniauth/strategies/openstax"
+      end
     end
   end
 end
