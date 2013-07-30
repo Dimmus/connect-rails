@@ -1,5 +1,6 @@
 require "openstax/connect/engine"
 require "openstax/connect/version"
+require "openstax/connect/utilities"
 
 module OpenStax
   module Connect
@@ -31,6 +32,7 @@ module OpenStax
         attr_accessor :openstax_application_id
         attr_accessor :openstax_application_secret
         attr_reader :openstax_services_url
+        attr_accessor :logout_via
 
         def openstax_services_url=(url)
           url.gsub!(/https|http/,'https') if !(url =~ /localhost/)
@@ -42,6 +44,7 @@ module OpenStax
           @openstax_application_id = 'SET ME!'
           @openstax_application_secret = 'SET ME!'
           @openstax_services_url = 'https://services.openstax.org/'
+          @logout_via = :get
           super
         end
       end

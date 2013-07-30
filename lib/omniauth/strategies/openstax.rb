@@ -4,7 +4,7 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class Openstax < OAuth2
-      option :name, :openstax
+      option :name, "openstax"
 
       option :client_options, {
         :site => OpenStax::Connect.configuration.openstax_services_url,

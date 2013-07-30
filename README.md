@@ -29,4 +29,12 @@ If you're running OpenStax Services in a dev instance on your machine, you can s
 
     config.openstax_services_url = 'http://localhost:3000/'
 
-To have users login, direct them to `/connect/auth/openstax`.  This is also available through the `openstax_connect.login` route helper, e.g. `<%= link_to 'Sign in!', openstax_connect.login_path %>`.
+To have users login, direct them to `/connect/sessions/new`.  This is also available through the `openstax_connect.login` route helper, e.g. `<%= link_to 'Sign in!', openstax_connect.login_path %>`.
+
+There is also a logout path helper for `/connect/sessions/destroy`, given by `logout_path`.  By default this expects a `GET` request.  If you'd prefer a `DELETE` request, add this configuration:
+
+    config.logout_via = :delete
+
+Make sure to install the engine's migrations:
+
+    rake openstax_connect:install:migrations

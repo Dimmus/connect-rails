@@ -9,6 +9,8 @@ module OpenStax
     class Engine < ::Rails::Engine
       isolate_namespace OpenStax::Connect
 
+      config.autoload_paths << File.expand_path("../../../app/features", __FILE__)
+
       config.generators do |g|
         g.test_framework :rspec, :view_specs => false
       end
