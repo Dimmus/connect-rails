@@ -3,7 +3,6 @@
 class OpenStax::Connect::ProcessOmniauthAuthentication
 
   def self.exec(auth_data, current_user)
-    
     raise OpenStax::Connect::SecurityTransgression if auth_data.provider != "openstax"
 
     return current_user if 

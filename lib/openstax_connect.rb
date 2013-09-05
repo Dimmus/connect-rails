@@ -1,6 +1,7 @@
 require "openstax/connect/engine"
 require "openstax/connect/version"
 require "openstax/connect/utilities"
+require "openstax/connect/route_helper"
 
 module OpenStax
   module Connect
@@ -19,6 +20,9 @@ module OpenStax
       #     ...
       #   end
       #
+      # Set enable_stubbing to true iff you want this engine to fake all 
+      #   interaction with the services site.
+      #
       
       def configure
         yield configuration
@@ -31,6 +35,7 @@ module OpenStax
       class Configuration
         attr_accessor :openstax_application_id
         attr_accessor :openstax_application_secret
+        attr_accessor :enable_stubbing
         attr_reader :openstax_services_url
         attr_accessor :logout_via
 
@@ -44,8 +49,13 @@ module OpenStax
           @openstax_application_id = 'SET ME!'
           @openstax_application_secret = 'SET ME!'
           @openstax_services_url = 'https://services.openstax.org/'
+          @enable_stubbing = true
           @logout_via = :get
           super
+        end
+
+        def enable_stubbing?
+          !Rails.env.production? && enable_stubbing
         end
       end
 
