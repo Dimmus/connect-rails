@@ -1,0 +1,59 @@
+<%= (@errors || []).inspect %>
+
+<%= osu_section_block "Register a new user" do %>
+
+  <%= form_tag dev_users_create_path, remote: false do %>
+
+    <%# # how do we know it is for this form? should scope the results objects somehow 
+          also need to know that certain errors are for this form -- two forms on this page
+          could have :username fields %>
+    First name <%= text_field_tag :first_name, @results[:user].try(:first_name) %><br/>
+    Last name <%= text_field_tag :last_name %><br/>
+    Username <%= text_field_tag :username %><br/>
+
+    <%= submit_tag 'Register' %>
+  <% end %>
+
+<% end %>
+
+<%= osu_section_block "Generate new users" do %>
+    <%= form_tag dev_users_generate_path do %>
+      Generate <%= text_field_tag :count, 1, style: 'width:30px' %> user(s) <%= submit_tag 'Do it now!' %>
+    <% end %>
+<% end %>
+
+<hr/>
+
+<%= osu_section_block "Login as an existing user" do %>
+
+  <%= render 'openstax/connect/users/action_search', action_search_path: dev_users_search_path %>
+
+  <div id="search-results-list">
+
+  </div>
+
+  <% if false %>
+
+  <%= form_tag dev_users_search_path do %>
+    Search for <%= text_field_tag :search %> 
+    in 
+    <%= select_tag :field, 
+                   options_for_select(["Username", "First name", "Last name"]) %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+
+  <%= form_tag dev_sessions_create_path do %>
+  
+    First name <%= text_field_tag :first_name %><br/>
+    Last name <%= text_field_tag :last_name %><br/>
+    Username <%= text_field_tag :username %><br/>
+
+    <%= submit_tag 'Register' %>
+  <% end %>
+  <% end %>
+  
+  
+  <%#= render 'users/' %>
+
+<% end %>

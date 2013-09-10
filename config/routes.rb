@@ -7,9 +7,16 @@ OpenStax::Connect::Engine.routes.draw do
   match 'sessions/destroy', :as => 'logout', :via => OpenStax::Connect.configuration.logout_via
 
   if OpenStax::Connect.configuration.enable_stubbing?
-    get 'developer/new_session'
-    post 'developer/register'
-    post 'developer/login'
+    namespace :dev do
+      # get 'sessions/new'
+      # post 'sessions/create'
+      # post 'sessions/search'
+      get 'users', to: 'users#index'
+      post 'users/create'
+      post 'users/generate'
+      post 'users/sign_in'
+      post 'users/search'
+    end
   end
 end
 
@@ -18,7 +25,7 @@ module OpenStax
   module Connect
     hh = Engine.routes.url_helpers
 
-    RouteHelper.register_path(:login, hh.openstax_login_path) { hh.developer_new_session_path }
+    RouteHelper.register_path(:login, hh.openstax_login_path) { hh.dev_users_path }
   end
 end
 

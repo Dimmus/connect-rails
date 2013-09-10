@@ -1,0 +1,28 @@
+<%# Copyright 2011-2012 Rice University. Licensed under the Affero General Public 
+    License version 3 or later.  See the COPYRIGHT file for details. %>
+
+<%
+   # Clients of this partial must supply the following variables:
+   #   action_search_path
+   # Additionally, the client can override any of the following:
+  
+  @selected_search_type ||= 'Any'
+  @search_terms ||= ''
+  
+%>
+
+<%= form_tag(action_search_path, 
+             :method => "post",
+             :id => 'action_search_form',
+             :remote => true) do %>
+
+  Search for 
+  <%= text_field_tag :search_terms, @search_terms, style: 'width:300px' %> 
+  in         
+  <%= select_tag :search_type, 
+                 options_for_select(['Any', 'Name', 'Username'], 
+                                    @selected_search_type) %>
+
+  <%= submit_tag 'Search' %>
+
+<% end %>

@@ -3,6 +3,7 @@ ActiveSupport::Inflector.inflections do |inflect|
 end
 
 require 'omniauth'
+require 'squeel'
 
 module OpenStax
   module Connect
@@ -10,6 +11,7 @@ module OpenStax
       isolate_namespace OpenStax::Connect
 
       config.autoload_paths << File.expand_path("../../../app/features", __FILE__)
+      config.autoload_paths << File.expand_path("../../../app/handlers", __FILE__)
 
       config.generators do |g|
         g.test_framework :rspec, :view_specs => false

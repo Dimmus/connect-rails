@@ -4,5 +4,6 @@
 # Inherit from the applications ApplicationController to share some methods
 class OpenStax::Connect::ApplicationController < ApplicationController
 
+  include OpenStax::Utilities::HandleWith
 
 end

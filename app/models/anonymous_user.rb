@@ -21,4 +21,8 @@ class AnonymousUser
     'anonymous'
   end
 
+  def name
+    'Guest User'
+  end
+
 end
