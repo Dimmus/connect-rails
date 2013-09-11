@@ -1,15 +1,19 @@
 <%= (@errors || []).inspect %>
+<%= params.inspect %>
+
+<% (@errors || []).each do |error| %>
+  <%= I18n.t "activerecord.errors.messages.blank" %>
+<% end %>
 
 <%= osu_section_block "Register a new user" do %>
 
-  <%= form_tag dev_users_create_path, remote: false do %>
 
-    <%# # how do we know it is for this form? should scope the results objects somehow 
-          also need to know that certain errors are for this form -- two forms on this page
-          could have :username fields %>
-    First name <%= text_field_tag :first_name, @results[:user].try(:first_name) %><br/>
-    Last name <%= text_field_tag :last_name %><br/>
-    Username <%= text_field_tag :username %><br/>
+  <%= lev_form_for :register, url: dev_users_create_path do |f| %>
+
+    First name <%= f.text_field :first_name %><br/>
+    Last name <%= f.text_field :last_name %><br/>
+    Username <%= f.text_field :username %><br/>
+    Admin? <%= f.check_box :is_administrator %><br/>
 
     <%= submit_tag 'Register' %>
   <% end %>

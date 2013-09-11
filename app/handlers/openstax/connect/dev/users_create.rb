@@ -1,7 +1,10 @@
 class OpenStax::Connect::Dev::UsersCreate
-  include OpenStax::Utilities::Handler
+  include Lev::Handler
 
 protected
+
+  def setup
+  end
 
   def authorized?
     !Rails.env.production?
@@ -9,16 +12,14 @@ protected
 
   def exec
     u = User.create do |user|
-      user.first_name = params[:first_name]
-      user.last_name = params[:last_name]
-      user.username = params[:username]
-      user.is_administrator = params[:is_administrator]
+      user.first_name = params[:register][:first_name]
+      user.last_name = params[:register][:last_name]
+      user.username = params[:register][:username]
+      user.is_administrator = params[:register][:is_administrator]
       user.openstax_uid = available_openstax_uid
     end
   
-    u.errors.each_type do |attribute, type|
-      errors.add(code: type, data: u, ui_label: attribute)
-    end
+    transfer_errors_from(u, :register)
 
     results[:user] = u
   end
