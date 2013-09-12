@@ -1,8 +1,6 @@
-<%= (@errors || []).inspect %>
-<%= params.inspect %>
 
-<% (@errors || []).each do |error| %>
-  <%= I18n.t "activerecord.errors.messages.blank" %>
+<% handler_errors.each do |error| %>
+  <%= error.translate %>
 <% end %>
 
 <%= osu_section_block "Register a new user" do %>
