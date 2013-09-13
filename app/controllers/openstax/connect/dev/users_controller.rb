@@ -16,7 +16,10 @@ module OpenStax
         end
 
         def generate
-          # generate a certain number of users
+          handle_with(Dev::UsersGenerate,
+                      params: params,
+                      success: lambda { redirect_to 'index', notice: 'Success!'},
+                      failure: lambda { render 'index', alert: 'Error' })
         end
 
 

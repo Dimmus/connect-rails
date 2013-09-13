@@ -19,8 +19,8 @@
 <% end %>
 
 <%= osu_section_block "Generate new users" do %>
-    <%= form_tag dev_users_generate_path do %>
-      Generate <%= text_field_tag :count, 1, style: 'width:30px' %> user(s) <%= submit_tag 'Do it now!' %>
+    <%= lev_form_for :generate, url: dev_users_generate_path do |f| %>
+      Generate <%= f.text_field :count, style: 'width:30px' %> user(s) <%= submit_tag 'Do it now!' %>
     <% end %>
 <% end %>
 
