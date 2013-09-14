@@ -7,10 +7,8 @@ module OpenStax::Connect::Dev
     paramify :generate do
       attribute :count, type: Integer
       validates :count, allow_nil: false,
-                        numericality: { greater_than: -1 }
-    end
-
-    def setup
+                        numericality: { only_integer: true,
+                                        greater_than_or_equal_to: 0 }
     end
 
     def authorized?
