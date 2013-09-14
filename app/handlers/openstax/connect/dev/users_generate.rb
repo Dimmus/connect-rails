@@ -6,50 +6,34 @@ module OpenStax::Connect::Dev
 
     paramify :generate do
       attribute :count, type: Integer
+      validates :count, allow_nil: false,
+                        numericality: { greater_than: -1 }
     end
 
     def setup
     end
- 
 
     def authorized?
       !Rails.env.production?
     end
 
     def exec
-      # if params[:generate][:count] < 0 freak out
-    # problem here is that count is a string!
-      count = params[:generate][:count]
-debugger
-      count = generate_params.count
+      generate_params.count.times do 
+        while !(User.where(:username => (username = SecureRandom.hex(4))).empty?) do; end
 
-      puts 'hi'
-
-      # count.times.do 
-      #   # random = SecureRandom.hex(4)
-
-      #   # while !(User.where(:username => (username = SecureRandom.hex(4))).empty?) do 
-      #   #   puts 'hi' 
-      #   # end
-
-      #   # u = User.create do |user|
-      #   #   user.first_name = "Jane#{username}"
-      #   #   user.last_name = "Doe#{username}"
-      #   #   user.username = username
-      #   #   user.is_administrator = false
-      #   #   user.openstax_uid = available_openstax_uid
-      #   # end
-    
-      #   # transfer_errors_from(u, :generate)
-      #   # return if errors.any?
-      # end
-
+        u = User.create do |user|
+          user.first_name = "Jane#{username}"
+          user.last_name = "Doe#{username}"
+          user.username = username
+          user.is_administrator = false
+          user.openstax_uid = available_openstax_uid
+        end
+      end
     end
 
     def available_openstax_uid
       (User.order("openstax_uid DESC").first.try(:openstax_uid) || 0) + 1
     end
-
 
   end 
 end

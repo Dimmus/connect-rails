@@ -3,25 +3,21 @@ module OpenStax
     module Dev
       class UsersController < DevController
 
-        def index
-
-        end
-
+        def index; end
         
         def create
           handle_with(Dev::UsersCreate,
                       params: params,
-                      success: lambda { redirect_to 'index', notice: 'Success!'},
+                      success: lambda { redirect_to dev_users_path, notice: 'Success!'},
                       failure: lambda { render 'index', alert: 'Error' })
         end
 
         def generate
           handle_with(Dev::UsersGenerate,
                       params: params,
-                      success: lambda { redirect_to 'index', notice: 'Success!'},
+                      success: lambda { redirect_to dev_users_path, notice: 'Success!'},
                       failure: lambda { render 'index', alert: 'Error' })
         end
-
 
         def sign_in
 
@@ -32,8 +28,6 @@ module OpenStax
                       params: params,
                       complete: lambda { render 'search' })
         end
-
-
 
       end
     end
