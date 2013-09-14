@@ -6,8 +6,7 @@ module OpenStax::Connect::Dev
 
     paramify :generate do
       attribute :count, type: Integer
-      validates :count, allow_nil: false,
-                        numericality: { only_integer: true,
+      validates :count, numericality: { only_integer: true,
                                         greater_than_or_equal_to: 0 }
     end
 
