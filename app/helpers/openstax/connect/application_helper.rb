@@ -9,7 +9,7 @@ module OpenStax
         options[:trigger] ||= OpenStax::Connect.configuration.default_errors_added_trigger
 
         if options[:errors].any? || flash[:alert]
-          "$('##{options[:errors_html_id]}').html('#{ ej(render options[:errors_partial], errors: options[:errors]) }').trigger('#{options[:trigger]}');".html_safe
+          "$('##{options[:errors_html_id]}').html('#{ j(render options[:errors_partial], errors: options[:errors]) }').trigger('#{options[:trigger]}');".html_safe
         else
           ("$('##{options[:errors_html_id]}').html('');" + capture(&block)).html_safe
         end

@@ -2,6 +2,7 @@ require "openstax/connect/engine"
 require "openstax/connect/version"
 require "openstax/connect/utilities"
 require "openstax/connect/route_helper"
+require "openstax/connect/action_list"
 
 module OpenStax
   module Connect
@@ -54,8 +55,8 @@ module OpenStax
           @openstax_services_url = 'https://services.openstax.org/'
           @enable_stubbing = true
           @logout_via = :get
-          @default_error_partial = 'openstax/connect/shared/attention'
-          @default_error_html_id = 'openstax-connect-attention'
+          @default_errors_partial = 'openstax/connect/shared/attention'
+          @default_errors_html_id = 'openstax-connect-attention'
           @default_errors_added_trigger = 'openstax-connect-errors-added'
           super
         end
