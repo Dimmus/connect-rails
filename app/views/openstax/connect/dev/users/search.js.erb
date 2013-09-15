@@ -1,3 +1,19 @@
 <% handler_errors.each do |error| %>
   alert('<%= error.translate %>');
 <% end %>
+
+<%
+  # @action_partial = 'blah'
+  @action_list_data = ActionListData.new(
+    ['First Name', 'Last Name', 'Username', ''],
+    ['25%', '25%', '25%', '25%'],
+    [
+      Proc.new { |user| user.first_name },
+      Proc.new { |user| user.last_name },
+      Proc.new { |user| user.username },
+      Proc.new { |user| link_to 'Home', main_app.root_path }
+    ]
+  )
+%>
+
+<%= render template: 'openstax/connect/users/action_search' %>

@@ -1,34 +1,69 @@
 <%# Copyright 2011-2012 Rice University. Licensed under the Affero General Public 
     License version 3 or later.  See the COPYRIGHT file for details. %>
 
-<% @action_partial_target ||= nil %>
+<%
+  users ||= []
+  action_partial_target ||= nil
+  action_partial ||= nil
+%>
 
+<table class="list" width="100%">
+  <tr>  
+    <% for ii in 0..data.num_columns - 1 %>
+      <th width="<%= data.get_width(ii) %>"><%= data.get_heading(ii) %></th>
+    <% end %>
+  </tr>
+  <% if users.empty? %>
+    <tr>
+      <td colspan="<%= data.num_columns %>">No results</td>
+    </tr>
+  <% else %>
+    <% users.all.each do |user| %>
+      <tr>
+        <% for ii in 0..data.num_columns - 1 %>
+          <td><%= data.get_data(ii, user) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+
+
+
+
+
+
+<% if false %>
 <table class="list" width="100%">
   <tr>
     <th width="20%">First Name</th>
     <th width="20%">Last Name</th>
     <th width="20%">Username</th>
+    <% if action_partial %>
     <th width="20%"></th>
+    <% end %>
   </tr>
 
-<% if @users.nil? || @users.empty? %>
+<% if users.empty? %>
 <tr>
     <td colspan="4">No results</td>
 </tr>
 <% else %>
-<% @users.each do |user| %>
-  <tr class="test test_section">
+<% users.each do |user| %>
+  <tr>
     <td><%= auth_only(user.first_name) %></td>
     <td><%= auth_only(user.last_name) %></td>
     <td><%= auth_only(user.username) %></td>
+    <% if action_partial %>
     <td align="center">
       <span id="user_action_form_<%= user.id %>">
-        <%= render :partial => @action_partial, 
-                   :locals => { :user => user,
-                                :target => @action_partial_target } %>
+        <%= render action_partial, user: user, target: action_partial_target %>
       </span>
     </td>
+    <% end %>
   </tr>
 <% end %>
 <% end %>
 </table>
+
+<% end %>

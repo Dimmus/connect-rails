@@ -1,0 +1,12 @@
+<%= unless_errors errors_html_id: 'action-search-errors' do %>
+  <% contents = render 'openstax/connect/users/action_list', 
+                       users: @results[:users], 
+                       # action_partial: @action_partial,
+                       # action_partial_target: @action_partial_target,
+                       data: @action_list_data
+
+                       %>
+  
+  $("#action-search-results-list").html("<%= escape_javascript(contents) %>");  
+<% end %>
+

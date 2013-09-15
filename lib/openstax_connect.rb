@@ -38,6 +38,9 @@ module OpenStax
         attr_accessor :enable_stubbing
         attr_reader :openstax_services_url
         attr_accessor :logout_via
+        attr_accessor :default_errors_partial
+        attr_accessor :default_errors_html_id
+        attr_accessor :default_errors_added_trigger
 
         def openstax_services_url=(url)
           url.gsub!(/https|http/,'https') if !(url =~ /localhost/)
@@ -51,6 +54,9 @@ module OpenStax
           @openstax_services_url = 'https://services.openstax.org/'
           @enable_stubbing = true
           @logout_via = :get
+          @default_error_partial = 'openstax/connect/shared/attention'
+          @default_error_html_id = 'openstax-connect-attention'
+          @default_errors_added_trigger = 'openstax-connect-errors-added'
           super
         end
 

@@ -22,7 +22,9 @@ module OpenStax
 
         def search
           handle_with(Dev::UsersSearch,
-                      complete: lambda { render 'search' })
+                      complete: lambda { 
+                        render 'search' 
+                      })
         end
 
       end
