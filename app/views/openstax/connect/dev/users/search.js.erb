@@ -10,7 +10,11 @@
                          Proc.new { |user| user.first_name },
                          Proc.new { |user| user.last_name },
                          Proc.new { |user| user.username },
-                         Proc.new { |user| link_to 'Home', main_app.root_path }
+                         Proc.new { |user| 
+                          link_to 'Sign in as', 
+                                  sessions_become_path(:user_id => user.id), 
+                                  method: :post 
+                         }
                        ]
                    )
            }

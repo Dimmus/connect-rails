@@ -34,7 +34,7 @@ module OpenStax
 
       def return_path(include_referrer=false)
         referrer = include_referrer ? request.referrer : nil
-        params[:return_to] || session.delete(:return_to) || referer || main_app.root_path
+        params[:return_to] || session.delete(:return_to) || referrer || main_app.root_path
       end
 
     end
