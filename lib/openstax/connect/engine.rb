@@ -11,6 +11,7 @@ module OpenStax
       isolate_namespace OpenStax::Connect
 
       config.autoload_paths << File.expand_path("../../../app/features", __FILE__)
+      config.autoload_paths << File.expand_path("../../../app/algorithms", __FILE__)
       config.autoload_paths << File.expand_path("../../../app/handlers", __FILE__)
 
       config.generators do |g|

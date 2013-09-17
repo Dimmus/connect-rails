@@ -13,6 +13,8 @@ module OpenStax::Connect::Dev
       validates :search_terms, presence: true                               
     end
 
+    uses_routine OpenStax::Connect::SearchUsers, as: :search_users
+
   protected
 
     def authorized?
@@ -23,39 +25,39 @@ module OpenStax::Connect::Dev
       terms = search_params.search_terms
       type = search_params.search_type
 
-      if terms.blank?
-        users = User.where{id == nil}.where{id != nil} # Empty
-      else
-        # Note: % is the wildcard. This allows the user to search
-        # for stuff that "begins with" but not "ends with".
-        case type
-        when 'Name'
-          users = User.scoped
-          terms.gsub(/[%,]/, '').split.each do |t|
-            next if t.blank?
-            query = t + '%'
-            users = users.where{(first_name =~ query) | (last_name =~ query)}
-          end
-        when 'Username'
-          query = terms.gsub('%', '') + '%'
-          users = where{username =~ query}
-        else # Any
-          users = User.scoped
-          terms.gsub(/[%,]/, '').split.each do |t|
-            next if t.blank?
-            query = t + '%'
-            users = users.where{(first_name =~ query) | 
-                        (last_name =~ query) |
-                        (username =~ query)}
-          end
-        end
-      end
+      # results[:users] = run(OpenStax::Connect::SearchUsers, terms, type.downcase.to_sym)
+      # results[:users] = run(:openstax_connect_search_users, terms, type.downcase.to_sym)
+      results[:users] = run(:search_users, terms, type.downcase.to_sym)
 
-      results[:users] = users
-    end
+      # if terms.blank?
+      #   users = User.where{id == nil}.where{id != nil} # Empty
+      # else
+      #   # Note: % is the wildcard. This allows the user to search
+      #   # for stuff that "begins with" but not "ends with".
+      #   case type
+      #   when 'Name'
+      #     users = User.scoped
+      #     terms.gsub(/[%,]/, '').split.each do |t|
+      #       next if t.blank?
+      #       query = t + '%'
+      #       users = users.where{(first_name =~ query) | (last_name =~ query)}
+      #     end
+      #   when 'Username'
+      #     query = terms.gsub('%', '') + '%'
+      #     users = where{username =~ query}
+      #   else # Any
+      #     users = User.scoped
+      #     terms.gsub(/[%,]/, '').split.each do |t|
+      #       next if t.blank?
+      #       query = t + '%'
+      #       users = users.where{(first_name =~ query) | 
+      #                   (last_name =~ query) |
+      #                   (username =~ query)}
+      #     end
+      #   end
+      # end
 
-    def default_transaction_isolation
-      :no_transaction
+      # results[:users] = users
     end
 
   end
