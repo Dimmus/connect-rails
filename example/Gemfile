@@ -4,7 +4,7 @@ gem 'rails', '3.2.14'
 
 gem 'sqlite3'
 
-gem 'openstax_connect', :path => '/Users/jps/dev/openstax/connect-rails'
+gem 'openstax_connect', :path => '..'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
