@@ -1,5 +1,5 @@
 OpenStax::Connect::Engine.routes.draw do
-  match '/auth/openstax/callback', to: 'sessions#create' #omniauth route
+  match '/auth/openstax/callback', to: 'sessions#omniauth_authenticated' #omniauth route
   get '/auth/openstax', :as => 'openstax_login'
   get 'sessions/new', :as => 'login'
   post 'sessions/become'

@@ -21,8 +21,20 @@ class AnonymousUser
     'anonymous'
   end
 
+  def first_name
+    'Guest User'
+  end
+
+  def last_name
+    'Guest User'
+  end
+
   def name
     'Guest User'
+  end
+
+  def openstax_uid
+    nil
   end
 
 end

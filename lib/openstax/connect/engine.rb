@@ -10,7 +10,6 @@ module OpenStax
     class Engine < ::Rails::Engine
       isolate_namespace OpenStax::Connect
 
-      config.autoload_paths << File.expand_path("../../../app/features", __FILE__)
       config.autoload_paths << File.expand_path("../../../app/algorithms", __FILE__)
       config.autoload_paths << File.expand_path("../../../app/handlers", __FILE__)
 

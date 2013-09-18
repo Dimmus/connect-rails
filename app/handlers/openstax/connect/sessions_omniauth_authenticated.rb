@@ -5,27 +5,30 @@ module OpenStax::Connect
 
   protected
 
+    def setup
+      @auth_data = request.env['omniauth.auth']
+    end
+
     def authorized?
-      !Rails.env.production? || caller.is_administrator?
+      @auth_data.provider == "openstax"
     end
 
     def exec
-
-
+      results[:user_to_sign_in] = user_to_sign_in
     end
 
-  def self.exec(auth_data, current_user)
-    raise OpenStax::Connect::SecurityTransgression if auth_data.provider != "openstax"
+    def user_to_sign_in
+      return caller if 
+        !caller.nil? && 
+        !caller.is_anonymous? &&
+        caller.openstax_uid == @auth_data.uid
 
-    return current_user if 
-      !current_user.nil? && 
-      current_user.openstax_uid == auth_data.uid
+      existing_user = User.where(openstax_uid: @auth_data.uid).first
+      return existing_user if !existing_user.nil?
 
-    existing_user = User.where(openstax_uid: auth_data.uid).first
-    return existing_user if !existing_user.nil?
-
-    return User.create do |user|
-      user.openstax_uid = auth_data.uid
+      return User.create do |user|
+        user.openstax_uid = @auth_data.uid
+      end
     end
   end
 

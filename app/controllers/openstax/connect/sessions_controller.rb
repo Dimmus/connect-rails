@@ -9,10 +9,12 @@ module OpenStax
         redirect_to RouteHelper.get_path(:login)
       end
 
-      def create
-        auth = request.env['omniauth.auth']
-        sign_in(ProcessOmniauthAuthentication.exec(auth, current_user))
-        redirect_to return_path(true)
+      def omniauth_authenticated
+        handle_with(SessionsOmniauthAuthenticated,
+                    complete: lambda { 
+                      sign_in(@results[:user_to_sign_in])
+                      redirect_to return_path(true)
+                    })
       end
 
       def destroy
