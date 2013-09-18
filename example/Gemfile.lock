@@ -1,12 +1,4 @@
 PATH
-  remote: /Users/jps/dev/lev
-  specs:
-    lev (0.0.2.alpha)
-      active_attr
-      transaction_isolation
-      transaction_retry
-
-PATH
   remote: /Users/jps/dev/openstax/connect-rails
   specs:
     openstax_connect (0.0.1.alpha)
@@ -14,13 +6,6 @@ PATH
       omniauth-oauth2 (~> 1.1.1)
       rails (~> 3.2.13)
       squeel
-
-PATH
-  remote: /Users/jps/dev/openstax_utilities
-  specs:
-    openstax_utilities (0.0.7.alpha)
-      attribeautiful (~> 0.0.7)
-      rails (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -93,6 +78,10 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    lev (0.0.2)
+      active_attr
+      transaction_isolation
+      transaction_retry
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -111,6 +100,9 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    openstax_utilities (0.0.7)
+      attribeautiful (~> 0.0.7)
+      rails (>= 3.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
@@ -182,9 +174,9 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   debugger
   jquery-rails
-  lev!
+  lev (>= 0.0.2)
   openstax_connect!
-  openstax_utilities!
+  openstax_utilities (~> 0.0.7)
   quiet_assets
   rails (= 3.2.14)
   sass-rails (~> 3.2.3)
