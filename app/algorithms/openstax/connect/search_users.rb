@@ -38,10 +38,6 @@ module OpenStax::Connect
       return users
     end
 
-    def self.default_transaction_isolation
-      Lev::TransactionIsolation.serializable
-    end
-
   end
 
 end

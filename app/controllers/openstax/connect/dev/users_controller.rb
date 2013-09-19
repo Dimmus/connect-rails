@@ -7,8 +7,8 @@ module OpenStax
         
         def create
           handle_with(Dev::UsersCreate,
-                      success: lambda { redirect_to dev_users_path, notice: 'Success!'},
-                      failure: lambda { render 'index', alert: 'Error' })
+                      success: lambda { redirect_to dev_users_path },
+                      failure: lambda { render 'index' })
         end
 
         def generate
