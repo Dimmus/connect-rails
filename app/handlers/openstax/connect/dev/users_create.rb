@@ -3,9 +3,6 @@ class OpenStax::Connect::Dev::UsersCreate
 
 protected
 
-  def setup
-  end
-
   def authorized?
     !Rails.env.production?
   end
@@ -26,6 +23,10 @@ protected
 
   def available_openstax_uid
     (User.order("openstax_uid DESC").first.try(:openstax_uid) || 0) + 1
+  end
+
+  def default_transaction_isolation
+    Lev::TransactionIsolation.mysql_default
   end
 
 end 
