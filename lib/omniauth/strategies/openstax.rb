@@ -11,11 +11,13 @@ module OmniAuth
         :authorize_url => "/oauth/authorize"
       }
 
-      uid { raw_info["uid"] }
+      uid        { raw_info["uid"] }
 
       info do
         {
-          :username => raw_info["username"]
+          username: raw_info["username"],
+          first_name: raw_info["first_name"],
+          last_name: raw_info["last_name"]
           # and anything else you want to return to your API consumers
         }
       end

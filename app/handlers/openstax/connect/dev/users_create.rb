@@ -7,7 +7,7 @@ protected
     !Rails.env.production?
   end
 
-  def exec
+  def handle
     u = User.create do |user|
       user.first_name = params[:register][:first_name]
       user.last_name = params[:register][:last_name]
@@ -16,17 +16,13 @@ protected
       user.openstax_uid = available_openstax_uid
     end
   
-    transfer_errors_from(u, :register)
+    transfer_errors_from(u, {scope: :register})
 
     results[:user] = u
   end
 
   def available_openstax_uid
     (User.order("openstax_uid DESC").first.try(:openstax_uid) || 0) + 1
-  end
-
-  def default_transaction_isolation
-    Lev::TransactionIsolation.mysql_default
   end
 
 end 

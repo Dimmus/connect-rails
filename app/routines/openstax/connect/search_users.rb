@@ -1,7 +1,7 @@
 module OpenStax::Connect
 
   class SearchUsers
-    include Lev::Algorithm
+    include Lev::Routine
 
   protected
 
@@ -32,10 +32,10 @@ module OpenStax::Connect
                       (username =~ query)}
         end
       else
-        raise IllegalArgument, "Unknown user search type: #{type.to_s}"
+        fatal_error(:unknown_user_search_type, data: type)
       end
 
-      return users
+      outputs[:users] = users
     end
 
   end

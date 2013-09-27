@@ -13,7 +13,9 @@ module OpenStax::Connect::Dev
       validates :search_terms, presence: true                               
     end
 
-    uses_routine OpenStax::Connect::SearchUsers, as: :search_users
+    uses_routine OpenStax::Connect::SearchUsers, 
+                 as: :search_users,
+                 translations: { outputs: :verbatim }
 
   protected
 
@@ -21,11 +23,11 @@ module OpenStax::Connect::Dev
       !Rails.env.production? || caller.is_administrator?
     end
 
-    def exec
+    def handle
       terms = search_params.search_terms
       type = search_params.search_type
 
-      results[:users] = run(:search_users, terms, type.downcase.to_sym)
+      run(:search_users, terms, type.downcase.to_sym)
     end
 
   end

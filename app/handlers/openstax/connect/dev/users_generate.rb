@@ -14,7 +14,7 @@ module OpenStax::Connect::Dev
       !Rails.env.production?
     end
 
-    def exec
+    def handle
       generate_params.count.times do 
         while !(User.where(:username => (username = SecureRandom.hex(4))).empty?) do; end
 
@@ -25,6 +25,8 @@ module OpenStax::Connect::Dev
           user.is_administrator = false
           user.openstax_uid = available_openstax_uid
         end
+
+        result.add_output(:users, u)
       end
     end
 

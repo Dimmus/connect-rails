@@ -13,8 +13,8 @@ module OpenStax::Connect
       @auth_data.provider == "openstax"
     end
 
-    def exec
-      results[:user_to_sign_in] = user_to_sign_in
+    def handle
+      outputs[:user_to_sign_in] = user_to_sign_in
     end
 
     def user_to_sign_in
@@ -26,9 +26,14 @@ module OpenStax::Connect
       existing_user = User.where(openstax_uid: @auth_data.uid).first
       return existing_user if !existing_user.nil?
 
-      return User.create do |user|
+      new_user = User.create do |user|
         user.openstax_uid = @auth_data.uid
+        user.username     = @auth_data.info.username
+        user.first_name   = @auth_data.info.first_name
+        user.last_name    = @auth_data.info.last_name
       end
+
+      transfer_errors_from(new_user, {type: :verbatim})
     end
   end
 

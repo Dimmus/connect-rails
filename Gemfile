@@ -10,6 +10,8 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
+gem 'lev', path: '/Users/jps/dev/lev'
+
 #
 # Gems for example app
 #

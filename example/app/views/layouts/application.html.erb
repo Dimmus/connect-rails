@@ -9,7 +9,7 @@
 <body>
 
 <% if signed_in? %>
-  Welcome, User <%= current_user.openstax_uid %>
+  Welcome, <%= current_user.casual_name %>
   <%= link_to "Log out", openstax_connect.logout_path %>
 <% else %>
   <%= link_to "Log in", openstax_connect.login_path %>
