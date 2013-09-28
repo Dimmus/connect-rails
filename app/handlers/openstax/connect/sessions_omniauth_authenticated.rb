@@ -34,6 +34,8 @@ module OpenStax::Connect
       end
 
       transfer_errors_from(new_user, {type: :verbatim})
+
+      new_user
     end
   end
 
