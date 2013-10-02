@@ -1,9 +1,13 @@
 # References:
 #  http://edgeguides.rubyonrails.org/engines.html#using-a-class-provided-by-the-application
 
-# Inherit from the applications ApplicationController to share some methods
-class OpenStax::Connect::ApplicationController < ApplicationController
+module OpenStax
+  module Connect
 
-  include Lev::HandleWith
+    # Inherit from the applications ApplicationController to share some methods
+    class ApplicationController < ::ApplicationController
+      include Lev::HandleWith
+    end
 
+  end
 end

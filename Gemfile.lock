@@ -2,22 +2,11 @@ PATH
   remote: .
   specs:
     openstax_connect (0.0.3.alpha)
-      lev (~> 0.0.3)
+      lev (~> 1.0.0)
       omniauth (~> 1.1)
       omniauth-oauth2 (~> 1.1.1)
       rails (~> 3.2.13)
       squeel
-
-PATH
-  remote: /Users/jps/dev/lev
-  specs:
-    lev (0.0.4.alpha)
-      actionpack (>= 3.0)
-      active_attr
-      activemodel (>= 3.0)
-      activerecord (>= 3.0)
-      transaction_isolation
-      transaction_retry
 
 GEM
   remote: http://rubygems.org/
@@ -90,6 +79,13 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    lev (1.0.0)
+      actionpack (>= 3.0)
+      active_attr
+      activemodel (>= 3.0)
+      activerecord (>= 3.0)
+      transaction_isolation
+      transaction_retry
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -193,7 +189,6 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   debugger
   jquery-rails
-  lev!
   openstax_connect!
   openstax_utilities (~> 0.0.7)
   quiet_assets

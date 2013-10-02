@@ -1,7 +1,7 @@
 module OpenStax::Connect
 
   class SearchUsers
-    include Lev::Routine
+    lev_routine transaction: :no_transaction
 
   protected
 
@@ -21,7 +21,7 @@ module OpenStax::Connect
         end
       when :username
         query = terms.gsub('%', '') + '%'
-        users = where{username =~ query}
+        users = User.where{username =~ query}
       when :any
         users = User.scoped
         terms.gsub(/[%,]/, '').split.each do |t|

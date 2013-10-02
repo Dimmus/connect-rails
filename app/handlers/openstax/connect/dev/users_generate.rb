@@ -26,7 +26,7 @@ module OpenStax::Connect::Dev
           user.openstax_uid = available_openstax_uid
         end
 
-        result.add_output(:users, u)
+        result.outputs.add(:users, u)
       end
     end
 

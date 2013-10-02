@@ -3,8 +3,7 @@
   <%= error.translate %>
 <% end %>
 
-<%= osu_section_block "Register a new user" do %>
-
+<%= osu.section_block "Register a new user" do %>
 
   <%= lev_form_for :register, url: dev_users_create_path do |f| %>
 
@@ -18,13 +17,13 @@
 
 <% end %>
 
-<%= osu_section_block "Generate new users" do %>
+<%= osu.section_block "Generate new users" do %>
     <%= lev_form_for :generate, url: dev_users_generate_path do |f| %>
       Generate <%= f.text_field :count, style: 'width:30px' %> user(s) <%= submit_tag 'Do it now!' %>
     <% end %>
 <% end %>
 
-<%= osu_section_block "Login as an existing user" do %>
+<%= osu.section_block "Login as an existing user" do %>
 
   <%= render 'openstax/connect/users/action_search', action_search_path: dev_users_search_path %>
 

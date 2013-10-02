@@ -4,6 +4,8 @@ module OpenStax
   module Connect
     class SessionsController < ApplicationController
 
+      skip_before_filter :authenticate_user!, except: [:become]
+
       def new
         session[:return_to] = request.referrer
         redirect_to RouteHelper.get_path(:login)

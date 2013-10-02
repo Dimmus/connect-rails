@@ -40,6 +40,11 @@ class ActionController::Base
     !current_user.is_anonymous?
   end
 
+  # Useful in before_filters
+  def authenticate_user!
+    redirect_to openstax_connect.login_path unless signed_in?
+  end
+
 protected
 
   helper_method :current_user, :current_user=, :signed_in?

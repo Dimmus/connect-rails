@@ -1,7 +1,7 @@
 
 <%= render template: 'openstax/connect/users/action_search',
            locals: {
-             users: @results[:users],
+             users: @handler_result.outputs[:users],
              list: OpenStax::Connect::ActionList.new(
                      headings: ['First Name', 'Last Name', 'Username', ''],
                      widths: ['25%', '25%', '25%', '25%'],

@@ -3,7 +3,7 @@ module OpenStax
     module ApplicationHelper
 
       def unless_errors(options={}, &block)
-        options[:errors] ||= @errors
+        options[:errors] ||= @handler_result.errors
         options[:errors_html_id] ||= OpenStax::Connect.configuration.default_errors_html_id
         options[:errors_partial] ||= OpenStax::Connect.configuration.default_errors_partial
         options[:trigger] ||= OpenStax::Connect.configuration.default_errors_added_trigger

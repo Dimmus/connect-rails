@@ -1,8 +1,8 @@
 module OpenStax::Connect::Dev
   class UsersSearch
 
-    include Lev::Handler
-
+    lev_handler transaction: :no_transaction
+    
     paramify :search do
       attribute :search_type, type: String
       validates :search_type, presence: true,
@@ -15,7 +15,7 @@ module OpenStax::Connect::Dev
 
     uses_routine OpenStax::Connect::SearchUsers, 
                  as: :search_users,
-                 translations: { outputs: :verbatim }
+                 translations: { outputs: {type: :verbatim} }
 
   protected
 

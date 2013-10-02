@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "omniauth", "~> 1.1"
   s.add_dependency "omniauth-oauth2", "~> 1.1.1"
   s.add_dependency "squeel"
-  s.add_dependency "lev", "~> 0.0.3"
+  # s.add_dependency "lev" #, "~> 1.0.1"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
