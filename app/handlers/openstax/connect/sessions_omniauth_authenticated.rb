@@ -1,7 +1,7 @@
 module OpenStax::Connect
 
   class SessionsOmniauthAuthenticated
-    include Lev::Handler
+    lev_handler
 
   protected
 

@@ -1,6 +1,6 @@
 module OpenStax::Connect::Dev
   class UsersGenerate
-    include Lev::Handler
+    lev_handler
 
   protected
 
