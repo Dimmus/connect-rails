@@ -39,6 +39,22 @@ Make sure to install the engine's migrations:
 
     rake openstax_connect:install:migrations
 
+You also need to create your own User and AnonymousUser models.  Once you do this, include concerns from the connect gem to get their baseline functionality.
+
+    class User < ActiveRecord::Base
+      include OpenStax::Connect::Models::User
+      ...
+    end
+
+and
+
+    class AnonymousUser < ActiveRecord::Base
+      include OpenStax::Connect::Models::AnonymousUser
+      ...
+    end
+
+Check out the engine code in app/concerns to see what this gets you.
+
 Example Application
 -------------------
 

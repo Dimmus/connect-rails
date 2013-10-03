@@ -12,6 +12,7 @@ module OpenStax
 
       config.autoload_paths << File.expand_path("../../../app/routines", __FILE__)
       config.autoload_paths << File.expand_path("../../../app/handlers", __FILE__)
+      config.autoload_paths << File.expand_path("../../../app/concerns", __FILE__)
 
       config.generators do |g|
         g.test_framework :rspec, :view_specs => false
