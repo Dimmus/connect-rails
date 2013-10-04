@@ -17,7 +17,7 @@ module OpenStax::Connect::Models::User
     end
 
     def name
-      first_name || last_name ? "#{first_name} #{last_name}" : username
+      (first_name || last_name) ? [first_name, last_name].compact.join(" ") : username
     end
 
     def casual_name

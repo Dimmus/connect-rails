@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     openstax_connect (0.0.3.alpha)
-      lev (~> 1.0.0)
+      lev (~> 2.0.1)
       omniauth (~> 1.1)
       omniauth-oauth2 (~> 1.1.1)
       rails (~> 3.2.13)
@@ -79,18 +79,19 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    lev (1.0.0)
+    lev (2.0.1)
       actionpack (>= 3.0)
       active_attr
       activemodel (>= 3.0)
       activerecord (>= 3.0)
+      hashie
       transaction_isolation
       transaction_retry
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
-    multi_json (1.8.0)
+    multi_json (1.8.1)
     multipart-post (1.2.0)
     oauth2 (0.8.1)
       faraday (~> 0.8)
