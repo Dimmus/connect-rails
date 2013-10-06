@@ -2,42 +2,62 @@ class ActionController::Base
   # References:
   #   http://railscasts.com/episodes/356-dangers-of-session-hijacking
 
-  # Always return an object
+  # Returns the current app user
   def current_user
-    if !request.ssl? || cookies.signed[:secure_user_id] == "secure#{session[:user_id]}"
-      @current_user ||= AnonymousUser.instance
+    current_connect_user
+    @current_app_user
+  end
 
-      if @current_user.is_anonymous? && session[:user_id]
+  # Quasi "private" method that returns the current connect user, refreshing it if needed
+  def current_connect_user
+    if !request.ssl? || cookies.signed[:secure_user_id] == "secure#{session[:user_id]}"
+      @current_connect_user ||= OpenStax::Connect::User.anonymous_instance
+
+      if @current_connect_user.is_anonymous? && session[:user_id]
         # Use current_user= to clear out bad state if any
-        self.current_user = User.where(id: session[:user_id]).first
+        self.current_connect_user = OpenStax::Connect::User.where(id: session[:user_id]).first
       end
 
-      @current_user
+      @current_connect_user
+    else
+      raise OpenStax::Connect.configuration.security_transgression_exception, "Hijacked session"
     end
-  end
+  end  
  
+  # Sets (signs in) the provided app user.
   def current_user=(user)
-    @current_user = user || AnonymousUser.instance
-    if @current_user.is_anonymous?
+    self.current_connect_user = OpenStax::Connect.configuration.user_provider.app_user_to_connect_user(user)
+    @current_app_user
+  end
+
+  # Quasi "private" method that sets the current connect user, also updates the cache
+  # of the current app user.
+  def current_connect_user=(user)
+    @current_connect_user = user || OpenStax::Connect::User.anonymous_instance
+    if @current_connect_user.is_anonymous?
       session[:user_id] = nil
       cookies.delete(:secure_user_id)
     else
       session[:user_id] = @current_user.id
       cookies.signed[:secure_user_id] = {secure: true, value: "secure#{@current_user.id}"}
     end
-    @current_user
+    @current_app_user = OpenStax::Connect.configuration.user_provider.connect_user_to_app_user(@current_connect_user)
+    @current_connect_user
   end
 
+  # Signs in the given app user
   def sign_in(user)
     self.current_user = user
   end
 
+  # Signs out the user
   def sign_out!
-    self.current_user = AnonymousUser.instance
+    self.current_connect_user =  OpenStax::Connect::User.anonymous_instance
   end
 
+  # Returns true iff there is a user signed in
   def signed_in?
-    !current_user.is_anonymous?
+    !current_connect_user.is_anonymous?
   end
 
   # Useful in before_filters
