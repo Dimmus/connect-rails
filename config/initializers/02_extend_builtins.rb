@@ -38,8 +38,8 @@ class ActionController::Base
       session[:user_id] = nil
       cookies.delete(:secure_user_id)
     else
-      session[:user_id] = @current_user.id
-      cookies.signed[:secure_user_id] = {secure: true, value: "secure#{@current_user.id}"}
+      session[:user_id] = @current_connect_user.id
+      cookies.signed[:secure_user_id] = {secure: true, value: "secure#{@current_connect_user.id}"}
     end
     @current_app_user = OpenStax::Connect.configuration.user_provider.connect_user_to_app_user(@current_connect_user)
     @current_connect_user
@@ -48,6 +48,10 @@ class ActionController::Base
   # Signs in the given app user
   def sign_in(user)
     self.current_user = user
+  end
+
+  def connect_sign_in(user)
+    self.current_connect_user = user
   end
 
   # Signs out the user

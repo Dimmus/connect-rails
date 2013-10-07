@@ -14,7 +14,7 @@ module OpenStax::Connect
     end
 
     def handle
-      outputs[:user_to_sign_in] = user_to_sign_in
+      outputs[:connect_user_to_sign_in] = user_to_sign_in
     end
 
     def user_to_sign_in

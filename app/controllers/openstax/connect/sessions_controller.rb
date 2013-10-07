@@ -14,7 +14,7 @@ module OpenStax
       def omniauth_authenticated
         handle_with(SessionsOmniauthAuthenticated,
                     complete: lambda { 
-                      sign_in(@handler_result.outputs[:user_to_sign_in])
+                      connect_sign_in(@handler_result.outputs[:connect_user_to_sign_in])
                       redirect_to return_path(true)
                     })
       end

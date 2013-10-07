@@ -67,6 +67,8 @@ module OpenStax
         #     # converts the given connect user to an app user
         #     # if you want to cache the connect_user in the app user
         #     # this is the place to do it.
+        #     # If no app user exists for this connect user, one should
+        #     # be created.
         #   end
         #
         #   def self.app_user_to_connect_user(app_user)

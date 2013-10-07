@@ -5,8 +5,6 @@ module OpenStax::Connect
     validates :username, presence: true
     validates :openstax_uid, presence: true
 
-    attr_reader :is_anonymous
-
     before_save :cannot_save_anonymous
 
     # first and last names are not required
@@ -25,15 +23,18 @@ module OpenStax::Connect
 
     def self.anonymous_instance
       @@anonymous_instance ||= User.new(
-        username: 'anonymous',
-        first_name: 'Guest',
-        last_name: 'User'
-        openstax_uid: nil,
-        is_anonymous: true
+        { username: 'anonymous',
+          first_name: 'Guest',
+          last_name: 'User',
+          openstax_uid: nil,
+          is_anonymous: true },
+        without_protection: true
       )
     end
 
   protected
+
+    attr_accessor :is_anonymous
 
     def cannot_save_anonymous
       !is_anonymous?
