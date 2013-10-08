@@ -10,18 +10,15 @@ class ActionController::Base
 
   # Quasi "private" method that returns the current connect user, refreshing it if needed
   def current_connect_user
-    if !request.ssl? || cookies.signed[:secure_user_id] == "secure#{session[:user_id]}"
-      @current_connect_user ||= OpenStax::Connect::User.anonymous_instance
-
-      if @current_connect_user.is_anonymous? && session[:user_id]
-        # Use current_user= to clear out bad state if any
-        self.current_connect_user = OpenStax::Connect::User.where(id: session[:user_id]).first
-      end
-
-      @current_connect_user
+    if request.ssl? && cookies.signed[:secure_user_id] != "secure#{session[:user_id]}"
+      sign_out! # hijacked
     else
-      raise OpenStax::Connect.configuration.security_transgression_exception, "Hijacked session"
+      @current_connect_user ||= OpenStax::Connect::User.anonymous
+      connect_sign_in(OpenStax::Connect::User.where(id: session[:user_id]).first) \
+        if @current_connect_user.is_anonymous? && session[:user_id]
     end
+
+    @current_connect_user
   end  
  
   # Sets (signs in) the provided app user.
@@ -33,7 +30,7 @@ class ActionController::Base
   # Quasi "private" method that sets the current connect user, also updates the cache
   # of the current app user.
   def current_connect_user=(user)
-    @current_connect_user = user || OpenStax::Connect::User.anonymous_instance
+    @current_connect_user = user || OpenStax::Connect::User.anonymous
     if @current_connect_user.is_anonymous?
       session[:user_id] = nil
       cookies.delete(:secure_user_id)
@@ -56,7 +53,7 @@ class ActionController::Base
 
   # Signs out the user
   def sign_out!
-    self.current_connect_user =  OpenStax::Connect::User.anonymous_instance
+    self.current_connect_user =  OpenStax::Connect::User.anonymous
   end
 
   # Returns true iff there is a user signed in
