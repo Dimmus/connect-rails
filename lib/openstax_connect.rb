@@ -5,6 +5,7 @@ require "openstax/connect/utilities"
 require "openstax/connect/route_helper"
 require "openstax/connect/action_list"
 require "openstax/connect/user_provider"
+require "openstax/connect/current_user_manager"
 
 module OpenStax
   module Connect
