@@ -5,7 +5,7 @@ module OpenStax
   module Connect
 
     # Inherit from the applications ApplicationController to share some methods
-    class ApplicationController < ::ApplicationController
+    class ApplicationController < ActionController::Base
       include Lev::HandleWith
     end
 

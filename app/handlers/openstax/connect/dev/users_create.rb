@@ -2,6 +2,8 @@ module OpenStax::Connect::Dev
   class UsersCreate
     lev_handler
 
+  # this code might be OBE
+
   protected
 
     def authorized?
@@ -13,7 +15,7 @@ module OpenStax::Connect::Dev
         user.first_name = params[:register][:first_name]
         user.last_name = params[:register][:last_name]
         user.username = params[:register][:username]
-        user.is_administrator = params[:register][:is_administrator]
+        # user.is_administrator = params[:register][:is_administrator]
         user.openstax_uid = available_openstax_uid
       end
     

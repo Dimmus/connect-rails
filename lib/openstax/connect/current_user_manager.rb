@@ -12,8 +12,8 @@ module OpenStax::Connect
 
     # Returns the current app user
     def current_user
-      refresh_current_users if @current_app_user.nil?
-      @current_app_user
+      load_current_users
+      @app_current_user
     end
 
     # Signs in the given user; the argument can be either a connect user or
@@ -36,51 +36,46 @@ module OpenStax::Connect
 
   protected
 
-    # Refreshes the current connect user (if needed) and returns it.
+    # Returns the current connect user
     def connect_current_user
-      refresh_current_users if @connect_current_user.nil?
+      load_current_users
       @connect_current_user
     end  
 
-    def refresh_current_users
+    # If they are nil (unset), sets the current users based on the session state
+    def load_current_users
+      return if !@connect_current_user.nil?
+
       if @request.ssl? && @cookies.signed[:secure_user_id] != "secure#{@session[:user_id]}"
         sign_out! # hijacked
       else
-        new_connect_current_user = @connect_current_user || User.anonymous
-        new_connect_current_user = User.where(id: @session[:user_id]).first \
-          if new_connect_current_user.is_anonymous? && @session[:user_id]
-
-        # changes both current and app user
-        self.connect_current_user = new_connect_current_user
+        @connect_current_user = @session[:user_id] ?
+          User.where(id: @session[:user_id]).first :
+          User.anonymous
+        @app_current_user = user_provider.connect_user_to_app_user(@connect_current_user)
       end
     end
 
     # Sets (signs in) the provided app user.
     def current_user=(user)
       self.connect_current_user = user_provider.app_user_to_connect_user(user)
-      @current_app_user
+      @app_current_user
     end
 
-    # Sets the current connect user, updating the session and cookie state, also 
-    # updates the cache of the current app user.
+    # Sets the current connect user, updates the app user, and also updates the
+    # session and cookie state.
     def connect_current_user=(user)
-      user ||= User.anonymous
-      @connect_current_user ||= User.anonymous
+      @connect_current_user = user || User.anonymous
+      @app_current_user = user_provider.connect_user_to_app_user(@connect_current_user)
 
-      if user != @connect_current_user
-        @connect_current_user = user
-        @current_app_user = nil # changed connect user so invalidate the app user
-
-        if @connect_current_user.is_anonymous?
-          @session[:user_id] = nil
-          @cookies.delete(:secure_user_id)
-        else
-          @session[:user_id] = @connect_current_user.id
-          @cookies.signed[:secure_user_id] = {secure: true, value: "secure#{@connect_current_user.id}"}
-        end
+      if @connect_current_user.is_anonymous?
+        @session[:user_id] = nil
+        @cookies.delete(:secure_user_id)
+      else
+        @session[:user_id] = @connect_current_user.id
+        @cookies.signed[:secure_user_id] = {secure: true, value: "secure#{@connect_current_user.id}"}
       end
 
-      @current_app_user ||= user_provider.connect_user_to_app_user(@connect_current_user)
       @connect_current_user
     end
 
