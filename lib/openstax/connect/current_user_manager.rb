@@ -49,9 +49,22 @@ module OpenStax::Connect
       if @request.ssl? && @cookies.signed[:secure_user_id] != "secure#{@session[:user_id]}"
         sign_out! # hijacked
       else
-        @connect_current_user = @session[:user_id] ?
-          User.where(id: @session[:user_id]).first :
-          User.anonymous
+        # If there is a session user_id, load up that user, otherwise set the anonymous user.
+       
+        if @session[:user_id]
+          @connect_current_user = User.where(id: @session[:user_id]).first
+
+          # It could happen (normally in development) that there is a session user_id that 
+          # doesn't map to a User in the db.  In such a case, sign_out! to reset the state
+          if @connect_current_user.nil?
+            sign_out!
+            return
+          end
+        else
+          @connect_current_user = User.anonymous
+        end
+
+        # bring the app user inline with the connect user
         @app_current_user = user_provider.connect_user_to_app_user(@connect_current_user)
       end
     end
