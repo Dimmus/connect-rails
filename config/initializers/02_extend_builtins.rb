@@ -29,7 +29,9 @@ class ActionController::Base
 
   # Useful in before_filters
   def authenticate_user!
-    redirect_to openstax_connect.login_path unless signed_in?
+    return if signed_in?
+    session[:return_to] = "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
+    redirect_to openstax_connect.login_path
   end
 
 protected

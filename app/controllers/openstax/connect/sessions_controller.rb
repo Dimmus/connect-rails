@@ -7,7 +7,6 @@ module OpenStax
       skip_before_filter :authenticate_user!
 
       def new
-        session[:return_to] = request.referrer
         redirect_to RouteHelper.get_path(:login)
       end
 
@@ -21,11 +20,15 @@ module OpenStax
 
       def destroy
         sign_out!
-        # Need to sign out on the services site so can't log back in automagically
-        redirect_to OpenStax::Utilities.generate_url(
-                      OpenStax::Connect.configuration.openstax_services_url + "/logout",
-                      return_to: return_url
-                    )
+
+        # If we're using the Services server, need to sign out of it so can't 
+        # log back in automagically
+        redirect_to OpenStax::Connect.configuration.enable_stubbing? ?
+                      return_url :
+                      OpenStax::Utilities.generate_url(
+                        OpenStax::Connect.configuration.openstax_services_url + "/logout",
+                        return_to: return_url
+                      )
       end
 
       def failure

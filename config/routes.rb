@@ -9,12 +9,7 @@ OpenStax::Connect::Engine.routes.draw do
 
   if OpenStax::Connect.configuration.enable_stubbing?
     namespace :dev do
-      # get 'sessions/new'
-      # post 'sessions/create'
-      # post 'sessions/search'
-      get 'users', to: 'users#index'
-      post 'users/create'
-      post 'users/generate'
+      get 'users/login'
       post 'users/search'
     end
   end
@@ -25,7 +20,7 @@ module OpenStax
   module Connect
     hh = Engine.routes.url_helpers
 
-    RouteHelper.register_path(:login, hh.openstax_login_path) { hh.dev_users_path }
+    RouteHelper.register_path(:login, hh.openstax_login_path) { hh.dev_users_login_path }
   end
 end
 
