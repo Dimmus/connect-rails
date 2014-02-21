@@ -35,25 +35,45 @@ There is also a logout path helper for `/connect/sessions/destroy`, given by `lo
 
     config.logout_via = :delete
 
+OpenStax Connect provides you with an `OpenStax::Connect::User` object.  You can
+use this as your app's User object without modification, you can modify it to suit
+your app's needs (not recommended), or you can provide your own custom User object
+that references the OpenStax Connect User object.  
+
+OpenStax Connect also provides you methods for getting and setting the current 
+signed in user (`current_user` and `current_user=` methods).  If you choose to create 
+your own custom User object that references the User object provide by Connect, 
+you can teach OpenStax Connect how to translate between your app's custom User 
+object and OpenStax Connect's built-in User object.
+
+To do this, you need to set a `user_provider` in this configuration.  
+
+    config.user_provider = MyUserProvider
+
+The user_provider is a class that provides two class methods:
+
+    def self.connect_user_to_app_user(connect_user)
+      # converts the given connect user to an app user
+      # if you want to cache the connect_user in the app user
+      # this is the place to do it.
+      # If no app user exists for this connect user, one should
+      # be created.
+    end
+  
+    def self.app_user_to_connect_user(app_user)
+      # converts the given app user to a connect user
+    end 
+
+Connect users are never nil.  When a user is signed out, the current connect user 
+is an anonymous user (responding true to `is_anonymous?`).  You can follow the same
+pattern in your app or you can use nil for the current user.  Just remember to check
+the anonymous status of connect users when doing your connect <-> app translations.
+
+The default `user_provider` just uses OpenStax::Connect::User as the app user.
+
 Make sure to install the engine's migrations:
 
     rake openstax_connect:install:migrations
-
-You also need to create your own User and AnonymousUser models.  Once you do this, include concerns from the connect gem to get their baseline functionality.
-
-    class User < ActiveRecord::Base
-      include OpenStax::Connect::Models::User
-      ...
-    end
-
-and
-
-    class AnonymousUser < ActiveRecord::Base
-      include OpenStax::Connect::Models::AnonymousUser
-      ...
-    end
-
-Check out the engine code in app/concerns to see what this gets you.
 
 Example Application
 -------------------
