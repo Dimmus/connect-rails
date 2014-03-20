@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    openstax_connect (0.0.9)
+    openstax_connect (0.0.10.alpha)
       coffee-rails (~> 3.2.1)
       lev (~> 2.0.1)
       omniauth (~> 1.1)
