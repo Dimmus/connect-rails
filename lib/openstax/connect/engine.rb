@@ -10,6 +10,11 @@ module OpenStax
     class Engine < ::Rails::Engine
       isolate_namespace OpenStax::Connect
 
+      initializer "openstax_connect.factories",
+                  :after => "factory_girl.set_factory_paths" do
+        FactoryGirl.definition_file_paths << File.join(root, 'spec', 'factories') if defined?(FactoryGirl)
+      end
+
       config.autoload_paths << File.expand_path("../../../app/routines", __FILE__)
       config.autoload_paths << File.expand_path("../../../app/handlers", __FILE__)
       config.autoload_paths << File.expand_path("../../../app/concerns", __FILE__)
