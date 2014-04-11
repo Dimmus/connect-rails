@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["JP Slavinsky"]
   s.email       = ["jps@kindlinglabs.com"]
   s.homepage    = "http://github.com/openstax/connect-rails"
-  s.summary     = "Rails common code and bindings and for 'services' API"
-  s.description = "Rails common code and bindings and for 'services' API"
+  s.summary     = "Rails common code and bindings and for 'accounts' API"
+  s.description = "Rails common code and bindings and for 'accounts' API"
 
   s.files = Dir["{app,config,db,lib}/**/*", "spec/factories/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", ">= 3.1"
   s.add_dependency "omniauth", ">= 1.1"
   s.add_dependency "omniauth-oauth2", ">= 1.1"
+  s.add_dependency "oauth2"
   s.add_dependency "squeel"
   s.add_dependency "lev", ">= 2.0"
   s.add_dependency "openstax_utilities", ">= 1.2"
@@ -27,6 +28,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "capybara"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "quiet_assets"
   s.add_development_dependency "thin"

@@ -1,3 +1,4 @@
+require "lev"
 require "openstax/connect/version"
 require "openstax/connect/exceptions"
 require "openstax/connect/engine"
@@ -6,6 +7,7 @@ require "openstax/connect/route_helper"
 require "openstax/connect/action_list"
 require "openstax/connect/user_provider"
 require "openstax/connect/current_user_manager"
+require "openstax/connect/accounts"
 
 module OpenStax
   module Connect
@@ -25,7 +27,7 @@ module OpenStax
       #   end
       #
       # Set enable_stubbing to true iff you want this engine to fake all 
-      #   interaction with the services site.
+      #   interaction with the accounts site.
       #
       
       def configure
@@ -40,7 +42,7 @@ module OpenStax
         attr_accessor :openstax_application_id
         attr_accessor :openstax_application_secret
         attr_accessor :enable_stubbing
-        attr_reader :openstax_services_url
+        attr_reader :openstax_accounts_url
         attr_accessor :logout_via
         attr_accessor :default_errors_partial
         attr_accessor :default_errors_html_id
@@ -50,16 +52,16 @@ module OpenStax
         # See the "user_provider" discussion in the README 
         attr_accessor :user_provider
 
-        def openstax_services_url=(url)
+        def openstax_accounts_url=(url)
           url.gsub!(/https|http/,'https') if !(url =~ /localhost/)
           url = url + "/" if url[url.size-1] != '/'
-          @openstax_services_url = url
+          @openstax_accounts_url = url
         end
 
         def initialize      
           @openstax_application_id = 'SET ME!'
           @openstax_application_secret = 'SET ME!'
-          @openstax_services_url = 'https://services.openstax.org/'
+          @openstax_accounts_url = 'https://accounts.openstax.org/'
           @enable_stubbing = true
           @logout_via = :get
           @default_errors_partial = 'openstax/connect/shared/attention'

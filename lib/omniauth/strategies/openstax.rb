@@ -7,18 +7,27 @@ module OmniAuth
       option :name, "openstax"
 
       option :client_options, {
-        :site => OpenStax::Connect.configuration.openstax_services_url,
+        :site => OpenStax::Connect.configuration.openstax_accounts_url,
         :authorize_url => "/oauth/authorize"
       }
 
-      uid        { raw_info["id"] }
+      uid { raw_info["id"] }
 
       info do
+        username = raw_info["username"]
+        title = raw_info["title"]
+        first_name = raw_info["first_name"]
+        last_name = raw_info["last_name"]
+        full_name = raw_info["full_name"] || "#{first_name} #{last_name}"
+        full_name = username if full_name.blank?
+
+        # Changed to conform to the omniauth schema
         {
-          username: raw_info["username"],
-          first_name: raw_info["first_name"],
-          last_name: raw_info["last_name"]
-          # and anything else you want to return to your API consumers
+          name: full_name,
+          nickname: username,
+          first_name: first_name,
+          last_name: last_name,
+          title: title
         }
       end
 
