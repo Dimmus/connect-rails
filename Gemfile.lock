@@ -7,7 +7,7 @@ PATH
       omniauth (>= 1.1)
       omniauth-oauth2 (>= 1.1)
       openstax_utilities (>= 1.2)
-      rails (>= 3.1)
+      rails (>= 3.2)
       sass-rails (>= 3.1)
       squeel
       uglifier (>= 1.0)
