@@ -1,7 +1,4 @@
-ActiveSupport::Inflector.inflections do |inflect|
-  inflect.acronym 'OpenStax'
-end
-
+require 'openstax/connect/inflections'
 require 'omniauth'
 require 'squeel'
 

@@ -1,6 +1,5 @@
 require "lev"
 require "openstax/connect/version"
-require "openstax/connect/exceptions"
 require "openstax/connect/engine"
 require "openstax/connect/utilities"
 require "openstax/connect/route_helper"
