@@ -75,6 +75,21 @@ Make sure to install the engine's migrations:
 
     rake openstax_connect:install:migrations
 
+Accounts API
+------------
+
+OpenStax::Connect::Accounts provides convenience methods for accessing the OpenStax Accounts API.
+
+`OpenStax::Connect::Accounts.create_application_user(user, version = nil)` takes
+an OpenStax::Connect::User and, optionally, an API version argument, and creates an ApplicationUser for the configured application and the given user. Call this method
+when users finish the registration process in your app.
+
+`OpenStax::Connect::Accounts.api_call(user, http_method, url, options)`
+provides a generic convenience method capable of making API calls to Accounts using
+the cached OAuth access token for the given OpenStax::Connect::User. HTTP method can
+be any valid HTTP method, and url is the desired API URL, without the 'api/' prefix.
+Options is a hash that can contain any option that OAuth2 requests accept, such as :headers, :params, :body, etc.
+
 Example Application
 -------------------
 
