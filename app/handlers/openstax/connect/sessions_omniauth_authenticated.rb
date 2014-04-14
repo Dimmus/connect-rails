@@ -21,7 +21,7 @@ module OpenStax::Connect
       return caller if 
         !caller.nil? && 
         !caller.is_anonymous? &&
-        caller.openstax_connect_user.openstax_uid == @auth_data.uid
+        caller.openstax_uid == @auth_data.uid
 
       existing_user = User.where(openstax_uid: @auth_data.uid).first
       return existing_user if !existing_user.nil?

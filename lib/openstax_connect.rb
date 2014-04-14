@@ -6,7 +6,6 @@ require "openstax/connect/route_helper"
 require "openstax/connect/action_list"
 require "openstax/connect/user_provider"
 require "openstax/connect/current_user_manager"
-require "openstax/connect/accounts"
 
 module OpenStax
   module Connect
@@ -74,6 +73,52 @@ module OpenStax
         def enable_stubbing?
           !Rails.env.production? && enable_stubbing
         end
+      end
+
+      # Executes an OpenStax Accounts API call, using the given HTTP method,
+      # API url and request options.
+      # Any options accepted by OAuth2 requests can be used, such as
+      # :params, :body, :headers, etc, plus the :access_token option, which can
+      # be used to manually specify an OAuth access token.
+      # On failure, it can throw Faraday::ConnectionFailed for connection errors
+      # or OAuth2::Error if Accounts returns an HTTP 400 error,
+      # such as 422 Unprocessable Entity.
+      # On success, returns an OAuth2::Response object.
+      def api_call(http_method, url, options = {})
+        version = options.delete(:api_version)
+        unless version.blank?
+          options[:headers] ||= {}
+          options[:headers].merge!({ 'Accept' => "application/vnd.accounts.openstax.#{version.to_s}" })
+        end
+
+        token_string = options.delete(:access_token)
+        token = token_string.blank? ? client.client_credentials.get_token :
+                OAuth2::AccessToken.new(client, token_string)
+
+        api_url = URI.join(configuration.openstax_accounts_url, 'api/', url)
+
+        token.request(http_method, api_url, options)
+      end
+
+      # Creates an ApplicationUser in Accounts for this app and the given
+      # OpenStax::Connect::User.
+      # Also takes an optional API version parameter. Defaults to :v1.
+      # On failure, throws an Exception, just like api_call.
+      # On success, returns an OAuth2::Response object.
+      def create_application_user(user, version = nil)
+        options = {:access_token => user.access_token,
+                   :api_version => (version.nil? ? :v1 : version)}
+        api_call(:post, 'application_users', options)
+      end
+
+    protected
+
+      def client
+        @client ||= OAuth2::Client.new(
+                      configuration.openstax_application_id,
+                      configuration.openstax_application_secret,
+                      :site => configuration.openstax_accounts_url
+                    )
       end
 
     end

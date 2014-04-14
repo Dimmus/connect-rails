@@ -24,13 +24,5 @@ module OpenStax::Connect
       expect(controller.current_user).to eq(OpenStax::Connect::User.anonymous)
       expect(controller.current_user.is_anonymous?).to eq(true)
     end
-
-    it 'should allow users in non-production environment to become other users' do
-      expect(controller.current_user).to eq(OpenStax::Connect::User.anonymous)
-      expect(controller.current_user.is_anonymous?).to eq(true)
-      get :become, user_id: user.id
-      expect(controller.current_user).to eq(user)
-      expect(controller.current_user.is_anonymous?).to eq(false)
-    end
   end
 end
