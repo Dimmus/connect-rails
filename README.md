@@ -86,8 +86,7 @@ an ApplicationUser for the configured application and the given user. Call this 
 when users finish the registration process in your app.
 
 `OpenStax::Connect.api_call(http_method, url, options = {})` provides a generic
-convenience method capable of making API calls to Accounts using the cached
-OAuth access token for the given OpenStax::Connect::User. `http_method` can be
+convenience method capable of making API calls to Accounts. `http_method` can be
 any valid HTTP method, and `url` is the desired API URL, without the 'api/' prefix.
 Options is a hash that can contain any option that OAuth2 requests accept, such
 as :headers, :params, :body, etc, plus the optional values :api_version (to specify
