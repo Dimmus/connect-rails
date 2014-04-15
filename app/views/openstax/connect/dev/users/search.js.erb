@@ -12,7 +12,7 @@
                          Proc.new { |user| user.username },
                          Proc.new { |user| 
                           link_to 'Sign in as', 
-                                  sessions_become_path(:user_id => user.id), 
+                                  become_dev_users_path(:user_id => user.id), 
                                   method: :post 
                          }
                        ]

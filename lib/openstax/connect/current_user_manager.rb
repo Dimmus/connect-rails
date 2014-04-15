@@ -34,13 +34,13 @@ module OpenStax::Connect
       !connect_current_user.is_anonymous?
     end
 
-  protected
-
     # Returns the current connect user
     def connect_current_user
       load_current_users
       @connect_current_user
-    end  
+    end
+
+  protected
 
     # If they are nil (unset), sets the current users based on the session state
     def load_current_users

@@ -28,9 +28,12 @@ module OpenStax::Connect
 
       new_user = User.create do |user|
         user.openstax_uid = @auth_data.uid
-        user.username     = @auth_data.info.username
+        user.username     = @auth_data.info.nickname
         user.first_name   = @auth_data.info.first_name
         user.last_name    = @auth_data.info.last_name
+        user.full_name    = @auth_data.info.name
+        user.title        = @auth_data.info.title
+        user.access_token = @auth_data.credentials.token
       end
 
       transfer_errors_from(new_user, {type: :verbatim})

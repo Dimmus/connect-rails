@@ -5,11 +5,8 @@ module OpenStax
     module Dev
       class DevController < ApplicationController
 
-        skip_before_filter :authenticate_user!
-
         before_filter Proc.new{ 
-          raise SecurityTransgression unless !Rails.env.production? || 
-                                             current_user.is_administrator? 
+          raise SecurityTransgression if Rails.env.production?
         }
         
       end
