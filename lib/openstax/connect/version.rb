@@ -1,5 +1,5 @@
 module OpenStax
   module Connect
-    VERSION = "0.0.11.alpha"
+    VERSION = "0.1.0"
   end
 end
